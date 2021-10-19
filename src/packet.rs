@@ -12,18 +12,19 @@ pub struct FindNode<N: NodeId> {
     pub target: N,
 }
 
-pub struct NeighborInfo<N: NodeId> {
-    pub neighbors: Vec<N>,
+pub struct NeighborInfo<N: NodeId, I> {
+    pub nodeid: N,
+    pub network_info: I,
 }
 
-pub enum PacketBody<N: NodeId> {
+pub enum PacketBody<N: NodeId, I> {
     Ping,
     Pong,
     FindNode(FindNode<N>),
-    NeighborInfo(NeighborInfo<N>),
+    NeighborInfo(Vec<NeighborInfo<N, I>>),
 }
 
-pub struct Packet<N: NodeId> {
+pub struct Packet<N: NodeId, I> {
     pub header: PacketHeader<N>,
-    pub body: PacketBody<N>,
+    pub body: PacketBody<N, I>,
 }
